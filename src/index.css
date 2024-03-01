@@ -1,3 +1,10 @@
+
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +17,81 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.App{
+  background: url(./assets/background.jpg) no-repeat center center/cover;
+  width: 100%;
+  height: 100vh;
+  color: white;
+  background-color: darkgray;
+  position: relative;
+}
+
+.App:before{
+  content: '';
+  background: url(./assets/background.jpg) no-repeat center center/cover;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.container{
+  max-width: 90%;
+  height: 700px;
+  margin: auto;
+  position: relative
+  top 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#bold{
+  font-weight: bold;
+}
+
+#slim{
+  font-weight: 100;
+}
+
+.App .top{
+  width: 100%;
+  margin: 1rem auto;
+
+}
+
+.App .location{
+font-size: 2rem;
+}
+
+.App .temp{
+  font-size: 4.2rem;
+  }
+
+.App .search{
+  text-align: center;
+  padding: 1rem;
+}
+
+.App .input{
+  padding: 7rem 1.5rem;
+  font-size: 1.2rem;
+  
+}
+.App .description{
+  font-size: 1.2rem;
+}
+
+.App .bottom{
+  display: flex;
+  justify-content: space-evenly;
+  padding: 1rem;
+  width: 100%;
+  text-align: center;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.3);
 }
