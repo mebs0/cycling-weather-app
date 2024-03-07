@@ -20,17 +20,26 @@ code {
 }
 
 .App{
-  background: url(./assets/background.jpg) no-repeat center center/cover;
+  background: url(./assets/weather.jpg) no-repeat center center/cover;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   color: white;
   background-color: darkgray;
   position: relative;
 }
 
+.App .threehourly-daily{
+  border-radius: 10px;
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
+  backdrop-filter: blur(15px);
+  border: solid rgba(255, 255, 255, 0.4);
+  border-width: 0.05rem;
+}
 .App:before{
   content: '';
-  background: url(./assets/background.jpg) no-repeat center center/cover;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -38,16 +47,19 @@ code {
   left: 0;
   z-index: -1;
 }
-
+#img-small{
+  max-width: 50%;
+  height: auto;
+}
 .container{
-  max-width: 90%;
-  height: 700px;
+  max-width: 100%;
+  height: auto;
   margin: auto;
-  position: relative
-  top 10%;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding: 2rem;
 }
 
 #bold{
@@ -61,6 +73,7 @@ code {
 .App .top{
   width: 100%;
   margin: 1rem auto;
+  margin-bottom: 4rem;
 
 }
 
@@ -72,26 +85,89 @@ font-size: 2rem;
   font-size: 4.2rem;
   }
 
-.App .search{
+.App .temp{
+  font-size: 4.2rem;
+  }
+
+
+.App .menu-bar{
   text-align: center;
-  padding: 1rem;
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 0.5rem;
 }
 
-.App .input{
-  padding: 7rem 1.5rem;
-  font-size: 1.2rem;
-  
+#menu-button{
+  margin-left: 1rem;
+  font-size: 2rem;
+  text-align: left;
 }
+
+#search-bar{
+  margin-right: 1rem;
+  width: 100%;
+  text-align: right;
+  color: white;
+  background-color: transparent;
+  border: none;
+}
+
+#search-field{
+  width: 30%;
+  padding-top:0.2rem ;
+  padding-bottom:0.2rem ;
+  text-align: center;
+  font-size: medium;
+  color: white;
+  backdrop-filter: blur(15px);
+  background-color: transparent;
+  border: solid white;
+  border-width: 0.05rem;
+}
+
+
+
 .App .description{
   font-size: 1.2rem;
 }
 
 .App .bottom{
+  margin-top: 5rem;
   display: flex;
   justify-content: space-evenly;
-  padding: 1rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
   width: 100%;
   text-align: center;
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  border: solid rgba(255, 255, 255, 0.4);
+  border-width: 0.05rem;
 }
+
+#weather-box-small{
+  background-color: transparent;
+  border: solid;
+  border-width: 0.05rem;
+  margin-left: 2px;
+  margin-right: 2px;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-radius: 20px;
+}
+
+#hourly-weekly-toggle{
+  width: 45%;
+  margin-bottom: 0.2rem;
+  border: none;
+  background-color: transparent;
+  font-size: 1rem;
+  padding: none;
+  color: white;
+  font-weight: bolder;
+}
+
+p{
+  text-transform: capitalize;
+}
+
