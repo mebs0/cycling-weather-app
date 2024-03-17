@@ -1,5 +1,3 @@
-
-
 *{
   box-sizing: border-box;
   margin: 0;
@@ -25,7 +23,12 @@ code {
   height: 100%;
   color: white;
   background-color: darkgray;
-  position: relative;
+  /*position: relative; Fuhou changed */
+  position: relative;  /* Stops margin-top in textContainer from moving the screen downwards */
+}
+
+#firstScreen{
+  display: block;   /* Added */
 }
 
 .App .threehourly-daily{
@@ -62,8 +65,13 @@ code {
   padding: 2rem;
 }
 
-#bold{
+.bold{
   font-weight: bold;
+}
+
+#locationText{
+  color: #363945;
+  font-size: 2rem;
 }
 
 #slim{
@@ -112,20 +120,21 @@ font-size: 2rem;
   border: none;
 }
 
-#search-field{
-  width: 30%;
-  padding-top:0.2rem ;
-  padding-bottom:0.2rem ;
-  text-align: center;
-  font-size: medium;
-  color: white;
-  backdrop-filter: blur(15px);
-  background-color: transparent;
-  border: solid white;
-  border-width: 0.05rem;
+
+
+/* Fuhou added */
+#searchImage{
+  background: transparent;   /* Make button invisible so just the image shows */
+  border: none;
 }
 
+#searchIcon{
+  margin-top: 0.4rem;
+  height: 30px;
+  width: 30px;
+}
 
+/* End */
 
 .App .description{
   font-size: 1.2rem;
@@ -170,4 +179,238 @@ font-size: 2rem;
 p{
   text-transform: capitalize;
 }
+
+
+
+/* Fu-Hou's CSS below */
+
+/* Search screen */
+#routeName{
+  display: none;
+  font-size: 1.5rem;
+  color: #34568B;
+  padding-top: 0.1rem;
+  padding-bottom: 1rem;
+}
+
+#searchOptions{
+  display:none; /* Hidden until the search icon is clicked on */
+}
+
+#backButton{
+  padding-left: 1rem;
+  padding-top: 1rem;
+}
+
+#backIcon{
+  background: transparent;   /* Make button invisible so just the image shows */
+  border: none;
+}
+
+#textContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* Center it horizontally (would be vertically for default flex-direction) */
+  margin-top: 2rem;  /* Moves text downwards */
+
+  color: black;
+  font-weight: bold;
+  font-size: 1.2rem; /* 1 rem is the default */
+
+  /*border-style: solid;
+  border-color: blue; For testing */
+}
+
+#textContainer p{
+  text-transform: none;  /* Stop auto capitalisation */
+}
+
+#buttonContainer{
+  display:flex;
+  justify-content: space-evenly;
+  align-items: center;   /* center it vertically */
+  height: 10rem; /* Moves buttons downwards */
+
+  /*border-style: solid; 
+  border-color: black; for testing */
+}
+
+.searchButtons{
+  padding: 1rem;
+  padding-left: 2rem;  /* Make buttons wider */
+  padding-right: 2rem;
+  border-radius: 1rem;
+}
+
+/* Coordinate screen */
+#coordinates{
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+#searchCoordinates{
+  display: none; /* Hidden until coordinates button is clicked on */
+}
+
+#coordinateTextContainer{
+  display:flex;
+  justify-content: center;
+  margin-top: 2rem;
+  font-weight: bold;
+  color: black;
+  font-size: 1.3rem;
+}
+
+#coordinateTextContainer p{
+  text-transform: none;
+}
+
+#latitudeContainer{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+
+  font-weight: bold;
+  color: black;
+  font-size: 1.5rem;
+}
+
+#longitudeContainer{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-weight: bold;
+  color: black;
+  font-size: 1.5rem;
+}
+
+#latitudeInput, #longitudeInput{
+  width: 50%;
+  padding-top:0.2rem;
+  padding-bottom:0.2rem;
+  margin-top: 0.7rem;
+
+  text-align: center;
+  font-size: 1.3rem;
+  color: white;
+  backdrop-filter: blur(15px);
+  background-color: transparent;
+  border: solid white;
+  border-width: 0.05rem;
+  color: darkblue
+}
+
+#submitCoButton{
+  display:flex;
+  justify-content: center;
+  padding: 3rem;
+}
+
+#submitCoordinates{
+  
+  padding: 1.5rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  border-radius: 1rem;
+}
+
+/* City Screen */
+#searchCity{
+  display: none;
+}
+
+#cityContainer{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  height: 50rem;
+  padding-top: 5rem;
+}
+
+#cityContainer p{
+  color: black;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-transform: none;
+  text-align: center;
+}
+
+#search-field{
+  width: 80%;
+  padding-top:0.2rem ;
+  padding-bottom:0.2rem ;
+  text-align: center;
+  font-size: 1.3rem;
+  color: white;
+  backdrop-filter: blur(15px);
+  background-color: transparent;
+  border: solid white;
+  border-width: 0.05rem;
+  
+  margin-top: 2rem;
+}
+
+#submitCity{
+  padding: 1.5rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  margin-top: 3rem;
+  border-radius: 1rem;
+}
+
+/* Route screen */
+#searchRoute{
+  display: none;
+}
+
+#routeContainer{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  height: 50rem;
+}
+
+#routeContainer p{
+  text-transform: none;
+  color: black;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Bookmark css for first screen */
+#bookmarkContainer{
+  padding-left: 13rem;
+}
+
+.bookmark{
+  background: transparent;   /* Make button invisible so just the image shows */
+  border: none;
+}
+
+#whiteBookmark{
+  display:block;
+  background: transparent;   /* Make button invisible so just the image shows */
+  border: none;
+}
+
+#blackBookmark{
+  display:block;
+  padding-left: 1rem;
+}
+
+#bb{
+  /* To overlap black icon onto white */
+  position:absolute;   
+  left: 16rem;
+  top: 0.5rem;
+}
+
+
+
 
