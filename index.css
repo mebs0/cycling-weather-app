@@ -1,0 +1,482 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.App{
+  background: url(./assets/weather.jpg) no-repeat center center/cover;
+  width: 100%;
+  height: 100%;
+  color: white;
+  background-color: darkgray;
+  /*position: relative; Fuhou changed */
+  position: relative;  /* Stops margin-top in textContainer from moving the screen downwards */
+}
+
+#firstScreen{
+  display: block;   /* Added */
+}
+
+.App .threehourly-daily{
+  border-radius: 10px;
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
+  backdrop-filter: blur(15px);
+  border: solid rgba(255, 255, 255, 0.4);
+  border-width: 0.05rem;
+}
+.App:before{
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+#img-small{
+  max-width: 50%;
+  height: auto;
+}
+.container{
+  max-width: 100%;
+  height: auto;
+  margin: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem;
+}
+
+.bold{
+  font-weight: bold;
+}
+
+#locationText{
+  color: #363945;
+  font-size: 2rem;
+}
+
+#slim{
+  font-weight: 100;
+}
+
+.App .top{
+  width: 100%;
+  margin: 1rem auto;
+  margin-bottom: 4rem;
+
+}
+
+.App .location{
+font-size: 2rem;
+}
+
+.App .temp{
+  font-size: 4.2rem;
+  }
+
+.App .temp{
+  font-size: 4.2rem;
+  }
+
+
+.App .menu-bar{
+  text-align: center;
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 0.5rem;
+}
+
+#menu-button{
+  margin-left: 1rem;
+  font-size: 2rem;
+  text-align: left;
+}
+
+#search-bar{
+  margin-right: 1rem;
+  width: 100%;
+  text-align: right;
+  color: white;
+  background-color: transparent;
+  border: none;
+}
+
+
+
+/* Fuhou added */
+#searchImage{
+  background: transparent;   /* Make button invisible so just the image shows */
+  border: none;
+}
+
+#searchIcon{
+  margin-top: 0.4rem;
+  height: 30px;
+  width: 30px;
+}
+
+/* End */
+
+.App .description{
+  font-size: 1.2rem;
+}
+
+.App .bottom{
+  margin-top: 5rem;
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  width: 100%;
+  text-align: center;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  border: solid rgba(255, 255, 255, 0.4);
+  border-width: 0.05rem;
+}
+
+#weather-box-small{
+  background-color: transparent;
+  border: solid;
+  border-width: 0.05rem;
+  margin-left: 2px;
+  margin-right: 2px;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-radius: 20px;
+}
+
+#hourly-weekly-toggle{
+  width: 45%;
+  margin-bottom: 0.2rem;
+  border: none;
+  background-color: transparent;
+  font-size: 1rem;
+  padding: none;
+  color: white;
+  font-weight: bolder;
+}
+
+p{
+  text-transform: capitalize;
+}
+
+
+
+/* Fu-Hou's CSS below */
+
+/* Search screen */
+#routeName{
+  display: none;
+  font-size: 1.5rem;
+  color: #34568B;
+  padding-top: 0.1rem;
+  padding-bottom: 1rem;
+}
+
+#searchOptions{
+  display:none; /* Hidden until the search icon is clicked on */
+}
+
+#backButton{
+  padding-left: 1rem;
+  padding-top: 1rem;
+}
+
+#backIcon{
+  background: transparent;   /* Make button invisible so just the image shows */
+  border: none;
+}
+
+#textContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* Center it horizontally (would be vertically for default flex-direction) */
+  margin-top: 2rem;  /* Moves text downwards */
+
+  color: black;
+  font-weight: bold;
+  font-size: 1.2rem; /* 1 rem is the default */
+
+  /*border-style: solid;
+  border-color: blue; For testing */
+}
+
+#textContainer p{
+  text-transform: none;  /* Stop auto capitalisation */
+}
+
+#buttonContainer{
+  display:flex;
+  justify-content: space-evenly;
+  align-items: center;   /* center it vertically */
+  height: 10rem; /* Moves buttons downwards */
+
+  /*border-style: solid; 
+  border-color: black; for testing */
+}
+
+.searchButtons{
+  padding: 1rem;
+  padding-left: 2rem;  /* Make buttons wider */
+  padding-right: 2rem;
+  border-radius: 1rem;
+}
+
+/* Coordinate screen */
+#coordinates{
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+#searchCoordinates{
+  display: none; /* Hidden until coordinates button is clicked on */
+}
+
+#coordinateTextContainer{
+  display:flex;
+  justify-content: center;
+  margin-top: 2rem;
+  font-weight: bold;
+  color: black;
+  font-size: 1.3rem;
+}
+
+#coordinateTextContainer p{
+  text-transform: none;
+}
+
+#latitudeContainer{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+
+  font-weight: bold;
+  color: black;
+  font-size: 1.5rem;
+}
+
+#longitudeContainer{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-weight: bold;
+  color: black;
+  font-size: 1.5rem;
+}
+
+#latitudeInput, #longitudeInput{
+  width: 50%;
+  padding-top:0.2rem;
+  padding-bottom:0.2rem;
+  margin-top: 0.7rem;
+
+  text-align: center;
+  font-size: 1.3rem;
+  color: white;
+  backdrop-filter: blur(15px);
+  background-color: transparent;
+  border: solid white;
+  border-width: 0.05rem;
+  color: darkblue
+}
+
+#submitCoButton{
+  display:flex;
+  justify-content: center;
+  padding: 3rem;
+}
+
+#submitCoordinates{
+  
+  padding: 1.5rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  border-radius: 1rem;
+}
+
+/* City Screen */
+#searchCity{
+  display: none;
+}
+
+#cityContainer{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  height: 50rem;
+  padding-top: 5rem;
+}
+
+#cityContainer p{
+  color: black;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-transform: none;
+  text-align: center;
+}
+
+#search-field{
+  width: 80%;
+  padding-top:0.2rem ;
+  padding-bottom:0.2rem ;
+  text-align: center;
+  font-size: 1.3rem;
+  color: white;
+  backdrop-filter: blur(15px);
+  background-color: transparent;
+  border: solid white;
+  border-width: 0.05rem;
+  
+  margin-top: 2rem;
+}
+
+#submitCity{
+  padding: 1.5rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  margin-top: 3rem;
+  border-radius: 1rem;
+}
+
+/* Route screen */
+#searchRoute{
+  display: none;
+}
+
+#routeContainer{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  height: 50rem;
+}
+
+#routeContainer p{
+  text-transform: none;
+  color: black;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Bookmark css for first screen */
+#bookmarkContainer{
+  padding-left: 13rem;
+}
+
+.bookmark{
+  background: transparent;   /* Make button invisible so just the image shows */
+  border: none;
+}
+
+#whiteBookmark{
+  display:block;
+  background: transparent;   /* Make button invisible so just the image shows */
+  border: none;
+}
+
+#blackBookmark{
+  display:block;
+  padding-left: 1rem;
+}
+
+#bb{
+  /* To overlap black icon onto white */
+  position:absolute;   
+  left: 16rem;
+  top: 0.5rem;
+}
+
+/** Navbar***/ 
+.navbar {
+  
+  background-color: #29335c;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+}
+
+.menu-toggle {
+  
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.menu-items {
+  
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.menu-items li {
+
+  margin-right: 1rem;
+}
+
+.menu-items a {
+  
+  text-decoration: none;
+  color: inherit;
+}
+
+/* for phone queries*/
+
+@media only screen and (max-width: 1024px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .menu-items {
+    display: none; /* Hide the menu items by default */
+    flex-direction: column;
+    position: fixed;
+    top: 70px; /* Adjust the top position to avoid overlapping with the top bar */
+    left: 0;
+    width: 88px; /* Adjust the width as needed */
+    background-color: #29335c;
+    padding: 0.2rem;
+    transition: transform 0.3s ease-in-out;
+    z-index: 10;
+  }
+  
+  .menu-items.open {
+    display: flex; /* Display the menu items when the menu is open */
+  }
+
+  .menu-items li {
+    margin: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .menu-items a {
+    font-size: 1.2rem;
+  }
+}
