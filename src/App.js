@@ -3,8 +3,11 @@ import axios from 'axios'
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
+import Navbar from './Navbar';
+
 
 function App() {
+
   const [TodayWeatherData, setTodayWeatherData] = useState({});
   const [IncrementForecast, setIncrementForecast] = useState({});
   const [searchLocation, setSearchLocation] = useState('London');
@@ -251,13 +254,13 @@ function App() {
 
 
   return ( 
+    
     <div className="App">
       <div id="firstScreen"> 
         <div className='menu-bar'>
 
-          <div id = 'menu-button'>
-            <i class='bx bx-menu'></i>
-          </div>
+          <Navbar />
+
 
           <div id="bookmarkContainer">
             <button class="bookmark" id='whiteBookmark' onClick={() => bookmark()}> <img id="wb" src="white bookmark.png"/> </button>
