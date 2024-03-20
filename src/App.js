@@ -4,6 +4,9 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
 
+
+import { FaBars, FaTimes } from "react-icons/fa";
+
 function App() {
   const [TodayWeatherData, setTodayWeatherData] = useState({});
   const [IncrementForecast, setIncrementForecast] = useState({});
@@ -18,14 +21,23 @@ function App() {
   const [submittedCoordinates, setSubmittedCoordinate] = useState(false);
   const [submittedCity, setSubmittedCity] = useState(false);
   const [routeName, setRouteName] = useState('hydepark');
+
+  const [isOpen, setIsOpen] = useState(false);
+  
+    // function that hides the navbar when the user clicks on the menu icon
+  const toggleNavbar = () => {
+    setIsOpen(!isOpen);
+  }
   
   const routes = {
     // A list of routes are stored here along with their latitude and longitude so an API call can be made using these values
     hydepark: [51.5073, -0.1694, "Hyde Park"],
-    regentspark: [51.5278, -0.1536, "Regents Park"]
+    regentspark: [51.5278, -0.1536, "Regents Park"],
+    richmondpark: [51.4409, -0.2751, "Richmond Park"],
+    finsburypark: [51.564, -0.1097, "Finsbury Park"]
   };
 
-  let bookmarkedLocations = [];
+  const [bookmarkedLocations, setBookmarks] = useState([]);
 
   useEffect(() => {
     // This method gets the API data for a city
@@ -49,11 +61,14 @@ function App() {
     // fetches data for london on initial load (searchLocation usestate default is set to london)
     fetchTodayWeatherData();
     fetchIncrementForecast();
-    goBack()
-    goBack()
-    setSubmittedCity(false) /* Reset so the user can enter another city later on */
-    hideRouteName(true) // Get rid of the previous route name under the city name
-  }, [submittedCity]); // uses the searchLocation variable to detect a change and refetch data
+
+    goBack();
+    goBack();  // Return to the first screen with the new location
+
+    hideRouteName(true); // Get rid of the previous route name under the city name
+    
+    setSubmittedCity(false); /* Reset so the user can enter another city later on */
+  }, [submittedCity]); // When the submittedCity variable changes this function gets called and the API data is fetched
 
 
   useEffect(() => {  
@@ -79,13 +94,18 @@ function App() {
     // fetches data for london on initial load (searchLocation usestate default is set to london)
     fetchTodayWeatherData();
     fetchIncrementForecast();
+
     goBack();
     goBack(); // Return to first screen
+
     setSubmittedCoordinate(false);
 
   }, [submittedCoordinates]); // When the submittedCoordinates button is clicked it is detected and an API call is made to fetch the data
 
-
+  useEffect(() => {
+    // This updates the bookmark icon to either black or white depending if the current location has been bookmarked, it runs when users switch between pages or during renders
+    checkIfBookmarked();  
+  });
 
   const selectorWheel = (onHourlyForecast) => {
     setToggleHourly(onHourlyForecast);
@@ -123,6 +143,7 @@ function App() {
 
 
   const getRoute = (rName) => {
+    // This method is passed the route that the user has entered and makes an API call with the coordinates stored with that route
     const routeName = rName.toString().toLowerCase().replace(/\s/g, '');   // Remove spaces from the user inputted name and make it lower case so it can be matched to a variable name
     var text = document.getElementById("routeText");
 
@@ -133,7 +154,7 @@ function App() {
       text.innerText = "Enter the name of a Route";
 
       var routeText = document.getElementById("routeName");
-      routeText.innerText = routes[routeName][2]; // Unhide the text on the first screen and set it to the route name selected
+      routeText.innerText = routes[routeName][2]; // Unhide the route text on the first screen and set it to the route entered by the user which is at index 2
       hideRouteName(false); // Unhide the route name
 
       setSubmittedCoordinate(true); // To make a new API call and return to the first screen to display the new forecast
@@ -151,6 +172,7 @@ function App() {
     }
     else{
       routeText.style.setProperty("display", "none");
+      routeText.innerText = ("");  // Reset the text
     }
   }
   
@@ -227,53 +249,85 @@ function App() {
   }
 
   const bookmark = () => {
-    var whiteBookmark = document.getElementById("whiteBookmark");  // First screen
-    var blackBookmark = document.getElementById("blackBookmark");
+    var routeText = document.getElementById("routeName");
 
-    if (!bookmarkedLocations.includes(TodayWeatherData.name)){
-      // If the location has not been bookmarked turn the icon to black and save it to the array
-      bookmarkedLocations.push(TodayWeatherData.name);
-      whiteBookmark.style.setProperty("display", "none");  // Hide white bookmark image
-      blackBookmark.style.setProperty("display", "block");  // Display black bookmark image
-      console.log("Bookmarked", bookmarkedLocations); // For testing in chrome console
+    if (!bookmarkedLocations.includes(TodayWeatherData.name) && !bookmarkedLocations.includes(routeText.innerText)){
+      // If the location has not been bookmarked already save it to the array
+      
+      if (getComputedStyle(routeText).display == "block"){   // Checks if the route is displayed on the screen
+        bookmarkedLocations.push(routeText.innerText);  // Adds the Route name instead of the City name to the menu
+      }
+      else{
+        bookmarkedLocations.push(TodayWeatherData.name);   // Add the city name to the menu
+      }
+
+      setBookmarks(bookmarkedLocations); // Save the updated array
+      checkIfBookmarked();  // Update the icon to black
     }
     else{
-      // If it has been bookmarked, remove it from the array and turn the icon to white again
+      // If it has been bookmarked, remove it from the array
       const index = bookmarkedLocations.indexOf(TodayWeatherData.name);  // Get the index of the element you want to remove
       bookmarkedLocations.splice(index, 1); // Remove 1 item
-      blackBookmark.style.setProperty("display", "none");
-      whiteBookmark.style.setProperty("display", "block");
-      console.log("Removed", bookmarkedLocations);  // For testing in chrome console
+      setBookmarks(bookmarkedLocations);
+      checkIfBookmarked();  // Reset icon to white
     }
     console.log("Current bookmarks: ", bookmarkedLocations);   // For testing in chrome console
-    return bookmarkedLocations; 
   }
 
+  const checkIfBookmarked = () => {
+    // Changes the icon to black if it's been bookmarked and white if it hasn't been bookmarked/bookmark was removed
+    var whiteBookmark = document.getElementById("whiteBookmark");
+    var blackBookmark = document.getElementById("blackBookmark");
+    var routeText = document.getElementById("routeName");
+
+    if (!bookmarkedLocations.includes(TodayWeatherData.name) && !bookmarkedLocations.includes(routeText.innerText)){
+      // If the new location has not been bookmarked then the icon should be white
+      whiteBookmark.style.setProperty("display", "block");  // Display white bookmark image
+      blackBookmark.style.setProperty("display", "none");  // Hide black bookmark image
+    }
+    else{
+      // If the new location has been bookmarked the icon should be black
+      blackBookmark.style.setProperty("display", "block");  // Display black bookmark image
+      whiteBookmark.style.setProperty("display", "none");  // Hide white bookmark image
+    }
+  }
+
+  const getBookmarkedForecast = (location) => {
+    // This method gets the forecast for the location that the user clicked on in the menu and updates the screen
+    setSearchLocation(location);
+    setSubmittedCity(true); // So the useEffect gets run and an API call is made
+  }
 
   return ( 
+    
     <div className="App">
       <div id="firstScreen"> 
         <div className='menu-bar'>
 
-          <div id = 'menu-button'>
-            <i class='bx bx-menu'></i>
-          </div>
+          <nav className="navbar">
+            <div className="menu-toggle" onClick={() => toggleNavbar()}>
+              {isOpen ? <FaTimes /> : <FaBars />}
+            </div>
+            
+            <ul className={`menu-items ${isOpen ? "open" : ""}`}>
+              <p id="menuTitle"> Bookmarks </p>
+              {bookmarkedLocations.map(location => <button class="bookmark" onClick={() => getBookmarkedForecast(location)}>{location}</button>)}
+              {/* Display all bookmarked locations onto the menu */}
+
+            </ul>
+          </nav>
+
 
           <div id="bookmarkContainer">
-            <button class="bookmark" id='whiteBookmark' onClick={() => bookmark()}> <img id="wb" src="white bookmark.png"/> </button>
-            {/* The bookmark will be white and when clicked on the location gets bookmarked and the icon becomes black */}
-            <button class="bookmark" id='blackBookmark' onClick={() => bookmark()}> <img id="bb" src="black bookmark.png"/> </button>
-            
+            <button class="bookmarkIcon" id='whiteBookmark' onClick={() => bookmark()}> <img id="wb" src="white bookmark.png"/> </button>
+            {/* The bookmark will be white and when clicked on, the location gets bookmarked and the icon becomes black */}
+            <button class="bookmarkIcon" id='blackBookmark' onClick={() => bookmark()}> <img id="bb" src="black bookmark.png"/> </button>     
           </div>
 
           <div id = 'search-bar'>
             <button id="searchImage" onClick={() => switchPage("search")}> <img id='searchIcon' src="search-icon.png"/> </button>
           </div>
-
-          
-          
         </div>
-
 
         <div className="container">
           <div className='top'>
@@ -365,6 +419,7 @@ function App() {
       <div id="searchCoordinates">
         <div id="backButton"> 
           <button id="backIcon" onClick={() => goBack()}> <img src="back-icon.png"/> </button>
+          {/* There is a back button on each screen to go back to the previous screen */}
         </div>
 
         <div id="coordinateTextContainer"> 
@@ -384,6 +439,7 @@ function App() {
 
         <div id="submitCoButton">
           <button id="submitCoordinates" onClick={() => sendCoordinates()}> Enter </button>
+          {/* The enter button makes an API call to get the forecast for the new location */}
         </div>
      
       </div>
@@ -397,6 +453,7 @@ function App() {
         <div id="cityContainer">
           <p> Enter the name of the City or Location </p>
           <input id='search-field' value = {searchLocation} onChange={event => setSearchLocation(event.target.value)}  type='text'/>
+          {/* This lets the user enter the name of a location and an API call will be made when they click enter */}
           <button id="submitCity" onClick={() => setSubmittedCity(true)}> Enter </button>
         </div>
 
@@ -413,6 +470,10 @@ function App() {
           {/* Store the inputted name in routeName and then pass it to the getRoute function */}
           <button id="submitCity" onClick={() => getRoute(routeName)}> Enter </button>
 
+          {/* Display a list of all the currently available routes */}
+          {/* Creates an array containing the keys of the object then gets each value of the route object using the keys, the value is an array and the name is obtained from index 2 */}
+          <p id="orClick"> Click on an existing route </p>
+          {Object.keys(routes).map(key => <button class="routeList" onClick={() => getRoute(routes[key][2])}>{routes[key][2]}</button>)}
         </div>
 
       </div>
